@@ -14,11 +14,11 @@ npm install vue-parent-emit
 
 ## Usage
 
-Create an event source using `newEventSource()` in the parent and pass it as a prop (e.g. `:onMyEvent="myEventSource"`) to the child. In the child's `mounted()` method, use the event source as a method to pass in the event listener (e.g. `this.onMyEvent(this.fetchSomeData)`). Now your event listener is set up.
+Create an event source using `newEventSource()` in the parent and pass it as a prop (e.g. `:onMyEvent="myEventSource"`) to the child. In the child's `mounted()` method, call this event source as a function and pass in the event listener (e.g. `this.onMyEvent(this.fetchSomeData)`). Now your event listener is set up.
 
-You can emit events from the parent like `myEventSource.emit('hello child!')`.
+You can emit events from the parent like `myEventSource.emit('hello child!')`. You can call `emit()` without a parameter, or with a single parameter to pass arbitrary data to the event listener functions. 
 
-Triggering actions, like re-fetching child data is a very good use-case for this mechanism. It is not (primarily) intended to pass data to the child. Props can do that just fine.
+See [Usage Notes](#usage-notes) for further discussion.
 
 ## Example
 
@@ -29,7 +29,7 @@ Triggering actions, like re-fetching child data is a very good use-case for this
 <template>
   <div>
     <ChildComponent :onMyEvent="myEventSource" other-prop="hello" />
-      <button @click="sendEvent">Notify child</button>
+    <button @click="sendEvent">Notify child</button>
   </div>
 </template>
 <script>
@@ -62,8 +62,6 @@ export default Vue.extend({
   <!-- child template -->
 </template>
 <script>
-import { newEventSource } from 'vue-parent-emit';
-
 export default Vue.extend({
   // ...
   props: {
@@ -72,7 +70,7 @@ export default Vue.extend({
   },
   mounted() {
     // register child event listener
-    // automatically unregisters when this Vue instance is destroyed
+    // automatically unregisters when this child component instance is destroyed
     this.onMyEvent(this.fetchSomeData);
   },
   methods: {
@@ -86,10 +84,16 @@ export default Vue.extend({
 </script>
 ```
 
-## Advanced Uses
+## Usage Notes
 
-### Multiple Event Kinds
+### Events don't replace props
 
-You can use a single event source for multiple kinds of events by passing in different paylods (`this.myEventSource.emit('event-a')` and `this.myEventSource.emit('event-b')`) and dispatch them according to the payload in the child component.
+Triggering actions, like re-fetching child data is a very good use-case for this mechanism. It is not (primarily) intended to pass data to the child. Props can do that just fine.
 
-We however recommend to create multiple event sources instead. You will need to pass multiple props, but both emitting and handling the events is easier to understand this way.
+Most of the time you should not need an event payload at all.
+
+### Multiple event kinds
+
+You can use a single event source for multiple kinds of events by passing in different payloads (`this.myEventSource.emit('foo-event')` and `this.myEventSource.emit('bar-event')`) and dispatch them according to the payload in the child component.
+
+We however recommend to create multiple specific event sources instead. You will need to pass multiple props, but both emitting and handling the events is easier to understand this way. As an example, you could create two separate event sources and just invoke `this.fooEvent.emit()` or  `this.barEvent.emit()` respectively.
