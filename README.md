@@ -9,7 +9,7 @@ This small library provides an intentionally limited event bus. It allows parent
 ## Installation
 
 ```bash
-npm install vue-parent-emit@git://github.com/kkuegler/vue-parent-emit.git#main
+npm install vue-parent-emit
 ```
 
 ## Usage
