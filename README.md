@@ -14,9 +14,14 @@ npm install vue-parent-emit
 
 ## Usage
 
-Create an event source using `newEventSource()` in the parent and pass it as a prop (e.g. `:onMyEvent="myEventSource"`) to the child. In the child's `mounted()` method, call this event source as a function and pass in the event listener (e.g. `this.onMyEvent(this.fetchSomeData)`). Now your event listener is set up.
-
-You can emit events from the parent like `myEventSource.emit('hello child!')`. You can call `emit()` without a parameter, or with a single parameter to pass arbitrary data to the event listener functions. 
+- Parent Component
+  - Create an event source using `newEventSource()`
+  - Pass as prop to child (e.g. `:onMyEvent="myEventSource"`)
+- Child Component
+  - in `mounted()`: `this.onMyEvent(this.fetchSomeData)` Call this event source as a function, pass in the event listener
+- Somewhere in parent
+  - emit events using e.g. `myEventSource.emit('hello child!')`
+  - call `emit()` without a parameter, or use a single parameter to pass arbitrary data to the event listener(s)
 
 See [Usage Notes](#usage-notes) for further discussion.
 
