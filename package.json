@@ -3,30 +3,33 @@
 	"version": "0.0.1",
 	"description": "Emit events from a parent Vue 2 component to children",
 	"license": "MIT",
-	"homepage": "https://github.com/caki0915/my-awesome-greeter#readme",
+	"homepage": "https://github.com/kkuegler/vue-parent-emit#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/caki0915/my-awesome-greeter.git"
+		"url": "git+https://github.com/kkuegler/vue-parent-emit.git"
 	},
 	"bugs": {
-		"url": "https://github.com/caki0915/my-awesome-greeter/issues"
+		"url": "https://github.com/kkuegler/vue-parent-emit/issues"
 	},
 	"keywords": [
 		"Vue",
 		"event",
 		"emit",
-		"parent"
+		"trigger",
+		"parent",
+		"child",
+		"component"
 	],
-	"author": "Konrad Kügler",
-	"main": "index.js",
-	"types": "index.d.ts",
+	"author": "Konrad Kügler <swamblumat-git@yahoo.de>",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
 	"scripts": {
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
-		"prettier": "^2.5.0",
+		"prettier": "2.5.0",
 		"typescript": "^4.5.2",
 		"vue": "^2.6.14"
 	},
