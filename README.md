@@ -1,4 +1,4 @@
-# vue-parent-emit
+# vue-parent-emit <a href="https://www.npmjs.com/package/vue-parent-emit"><img src="https://badgen.net/npm/v/vue-parent-emit"></a> <img src="https://badgen.net/npm/types/vue-parent-emit">
 
 Trigger events from a parent Vue 2 component to one or more child components.
 
