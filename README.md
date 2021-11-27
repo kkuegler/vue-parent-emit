@@ -27,6 +27,8 @@ See [Usage Notes](#usage-notes) for further discussion.
 
 ## Example
 
+Also see a [live sandbox example](https://codesandbox.io/s/vue-parent-emit-example-l95qe)
+
 ### Parent Component
 
 ```js
