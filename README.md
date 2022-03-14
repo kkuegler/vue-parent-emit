@@ -2,6 +2,8 @@
 
 Trigger events from a parent Vue 2 component to one or more child components.
 
+There is also a [Vue 3 version](https://github.com/kkuegler/vue-parent-emit/tree/vue-3) of this library.
+
 ## Description
 
 This small library provides an intentionally limited event bus. It allows parents to emit events and children to listen for these events in a local, understandable manner.
