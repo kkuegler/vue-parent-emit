@@ -1,7 +1,7 @@
 {
 	"name": "vue-parent-emit",
-	"version": "0.0.2",
-	"description": "Emit events from a parent Vue 2 component to children",
+	"version": "3.0.0-alpha.1",
+	"description": "Emit events from a parent Vue 3 component to children",
 	"license": "MIT",
 	"homepage": "https://github.com/kkuegler/vue-parent-emit#readme",
 	"repository": {
@@ -25,13 +25,15 @@
 	"types": "lib/index.d.ts",
 	"scripts": {
 		"build": "tsc --build",
+		"watch": "tsc --build --watch",
 		"clean": "tsc --build --clean",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"devDependencies": {
 		"prettier": "2.5.0",
 		"typescript": "^4.5.2",
-		"vue": "^2.6.14"
+		"vue": "^3.2.31",
+		"@babel/types": "7.17.0"
 	},
 	"files": [
 		"lib/**/*"
