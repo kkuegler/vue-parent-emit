@@ -6,7 +6,6 @@
 		"target": "ES5", 
 		"allowJs": true,
 		"moduleResolution": "node",
-		"sourceMap": true,
 		"baseUrl": ".",
 		"lib": ["es5", "DOM"], 
 		"esModuleInterop": true,
