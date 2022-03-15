@@ -6,7 +6,6 @@
 		"target": "ES2015", 
 		"allowJs": true,
 		"moduleResolution": "node",
-		"sourceMap": true,
 		"baseUrl": ".",
 		"lib": ["ES2015", "DOM"], 
 		"esModuleInterop": true,

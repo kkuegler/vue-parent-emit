@@ -10,7 +10,8 @@ export type EventSource<T> = {
 
 export function useExternalEvent<T>(eventRegistry: EventSource<T>, eventListener: EventCallback<T>) {
 	if (!getCurrentScope()) {
-		throw new Error("useExternalEvent() must be called from a setup() method - i.e. with the Composition API.");
+		throw new Error("useExternalEvent() must be called from a setup() method - i.e. with the Composition API.\n"
+			+ "See https://github.com/kkuegler/vue-parent-emit/tree/vue-3#child-component-traditional-options-api for an Options API approach.");
 	}
 	onMounted(() => {
 		eventRegistry.addListener(eventListener);
