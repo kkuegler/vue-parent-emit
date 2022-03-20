@@ -29,7 +29,7 @@ See [Usage Notes](#usage-notes) for further discussion.
 
 ## Example
 
-Also see a [live sandbox example](https://codesandbox.io/s/vue-parent-emit-vue-3-n4182v)
+Also see a [live sandbox example](https://codesandbox.io/s/vue-parent-emit-vue-3-node-7e2swu)
 
 ### Parent Component
 
