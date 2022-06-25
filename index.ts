@@ -1,12 +1,15 @@
 import { onMounted, onBeforeUnmount, getCurrentScope } from 'vue'
 
-type EventCallback<T = unknown> = (x: T) => void;
+// make EventCallback<string|number> = (x:string|number) => void instead of = ((x: string) => void) | ((x: number) => void)
+// see https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types
+type EventCallback<T = unknown> = [T] extends [undefined] ? () => void : (x: T) => void;
 
-export type EventSource<T> = {
+type GenericSource<T> = {
 	addListener: (eventListener: EventCallback<T>) => void;
 	removeListener: (eventListener: EventCallback<T>) => void;
 	emit(data: T): void;
 };
+export type EventSource<T> = undefined extends T ? GenericSource<T> & { emit(): void; } : GenericSource<T>;
 
 export function useExternalEvent<T>(eventRegistry: EventSource<T>, eventListener: EventCallback<T>) {
 	if (!getCurrentScope()) {
@@ -46,5 +49,5 @@ export function newEventSource<T>(): EventSource<T> {
 		},
 		addListener,
 		removeListener,
-	};
+	} as EventSource<T>;
 }
