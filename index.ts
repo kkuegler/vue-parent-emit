@@ -1,12 +1,15 @@
 import type Vue from 'vue';
 
-type EventCallback<T = unknown> = (x: T) => void;
+// make EventCallback<string|number> = (x:string|number) => void instead of = ((x: string) => void) | ((x: number) => void)
+// see https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types
+type EventCallback<T = unknown> = [T] extends [undefined] ? () => void : (x: T) => void;
 
-export type EventSource<T> = ((this: Vue, cb: EventCallback<T>) => void) & {
-	addListener: (cb: EventCallback<T>) => void;
+type GenericSource<T> = ((this: Vue, eventListener: EventCallback<T>) => void) & {
+	addListener: (eventListener: EventCallback<T>) => void;
+	removeListener: (eventListener: EventCallback<T>) => void;
 	emit(data: T): void;
-	removeListener: (cb: EventCallback<T>) => void;
 };
+export type EventSource<T> = undefined extends T ? GenericSource<T> & { emit(): void; } : GenericSource<T>;
 
 /**
  * Creates a registry for a single event kind.
@@ -40,5 +43,5 @@ export function newEventSource<T>(): EventSource<T> {
 	};
 	result.addListener = addListener;
 	result.removeListener = removeListener;
-	return result;
+	return result as EventSource<T>;
 }
