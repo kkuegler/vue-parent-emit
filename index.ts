@@ -1,10 +1,10 @@
-import type Vue from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 
 // make EventCallback<string|number> = (x:string|number) => void instead of = ((x: string) => void) | ((x: number) => void)
 // see https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types
 type EventCallback<T = unknown> = [T] extends [undefined] ? () => void : (x: T) => void;
 
-type GenericSource<T> = ((this: Vue, eventListener: EventCallback<T>) => void) & {
+type GenericSource<T> = ((this: Vue | ComponentPublicInstance, eventListener: EventCallback<T>) => void) & {
 	addListener: (eventListener: EventCallback<T>) => void;
 	removeListener: (eventListener: EventCallback<T>) => void;
 	emit(data: T): void;
@@ -30,7 +30,7 @@ export function newEventSource<T>(): EventSource<T> {
 		}
 	}
 
-	const result = function (this: Vue /*the child Vue instance*/, cb: EventCallback<T>) {
+	const result = function (this: Vue | ComponentPublicInstance /*the child Vue instance*/, cb: EventCallback<T>) {
 		addListener(cb);
 		this.$once('hook:beforeDestroy', () => {
 			removeListener(cb);

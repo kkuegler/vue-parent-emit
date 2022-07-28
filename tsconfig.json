@@ -7,7 +7,7 @@
 		"allowJs": true,
 		"moduleResolution": "node",
 		"baseUrl": ".",
-		"lib": ["es5", "DOM"], 
+		"lib": ["ES2015", "DOM"], 
 		"esModuleInterop": true,
 		"declaration": true
 	},
