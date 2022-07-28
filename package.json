@@ -1,6 +1,6 @@
 {
 	"name": "vue-parent-emit",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "Emit events from a parent Vue 2 component to children",
 	"license": "MIT",
 	"homepage": "https://github.com/kkuegler/vue-parent-emit#readme",
