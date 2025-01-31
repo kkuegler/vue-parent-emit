@@ -1,4 +1,4 @@
-import { onMounted, onBeforeUnmount, getCurrentScope } from 'vue'
+import { onMounted, getCurrentScope, onScopeDispose } from 'vue';
 
 // make EventCallback<string|number> = (x:string|number) => void instead of = ((x: string) => void) | ((x: number) => void)
 // see https://www.typescriptlang.org/docs/handbook/2/conditional-types.html#distributive-conditional-types
@@ -12,17 +12,35 @@ type GenericSource<T> = {
 };
 export type EventSource<T> = undefined extends T ? GenericSource<T> & { emit(): void } : GenericSource<T>;
 
-export function useExternalEvent<T>(eventRegistry: EventSource<T>, eventListener: EventCallback<T>) {
+/**
+ * Registers an event listener for an event source.
+ *
+ * @param eventRegistry The event source to listen to.
+ * @param eventListener The callback to call when the event is fired.
+ * @param options
+ * @param options.immediate If true, the listener is registered immediately. If false (the default), it is registered after the component is mounted.
+ */
+export function useExternalEvent<T>(
+	eventRegistry: EventSource<T>,
+	eventListener: EventCallback<T>,
+	{ immediate } = { immediate: false },
+) {
 	if (!getCurrentScope()) {
-		throw new Error("useExternalEvent() must be called from a setup() method - i.e. with the Composition API.\n"
-			+ "See https://github.com/kkuegler/vue-parent-emit/tree/vue-3#child-component-traditional-options-api for an Options API approach.");
+		throw new Error(
+			'useExternalEvent() must be called from a setup() method - i.e. with the Composition API.\n' +
+				'See https://github.com/kkuegler/vue-parent-emit/tree/vue-3#child-component-traditional-options-api for an Options API approach.',
+		);
 	}
-	onMounted(() => {
+	if (immediate) {
 		eventRegistry.addListener(eventListener);
-	})
-	onBeforeUnmount(() => {
+	} else {
+		onMounted(() => {
+			eventRegistry.addListener(eventListener);
+		});
+	}
+	onScopeDispose(() => {
 		eventRegistry.removeListener(eventListener);
-	})
+	});
 }
 
 /**
