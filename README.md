@@ -11,7 +11,7 @@ This small library provides an intentionally limited event bus. It allows parent
 ## Installation
 
 ```bash
-npm install vue-parent-emit
+npm install vue-parent-emit@^1
 ```
 
 ## Usage
