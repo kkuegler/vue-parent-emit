@@ -2,7 +2,7 @@
 
 Trigger events from a parent Vue 2 component to one or more child components.
 
-There is also a [Vue 3 version](https://github.com/kkuegler/vue-parent-emit/tree/vue-3) of this library.
+There is also a [Vue 3 version](https://github.com/kkuegler/vue-parent-emit/) of this library.
 
 ## Description
 
@@ -17,13 +17,13 @@ npm install vue-parent-emit
 ## Usage
 
 - Parent Component
-  - Create an event source using `newEventSource()`
-  - Pass as prop to child (e.g. `:on-my-event="myEventSource"`)
+    - Create an event source using `newEventSource()`
+    - Pass as prop to child (e.g. `:on-my-event="myEventSource"`)
 - Child Component
-  - in `mounted()`: `this.onMyEvent(this.fetchSomeData)` Call this event source as a function, pass in an event listener
+    - in `mounted()`: `this.onMyEvent(this.fetchSomeData)` Call this event source as a function, pass in an event listener
 - Somewhere in parent
-  - emit events using e.g. `myEventSource.emit('hello child!')`
-  - call `emit()` without a parameter, or use a single parameter to pass arbitrary data to the event listener(s)
+    - emit events using e.g. `myEventSource.emit('hello child!')`
+    - call `emit()` without a parameter, or use a single parameter to pass arbitrary data to the event listener(s)
 
 See [Usage Notes](#usage-notes) for further discussion.
 
@@ -105,4 +105,4 @@ Most of the time you should not need an event payload at all.
 
 You can use a single event source for multiple kinds of events by passing in different payloads (`this.myEventSource.emit('foo-event')` and `this.myEventSource.emit('bar-event')`) and dispatch them according to the payload in the child component.
 
-We however recommend to create multiple specific event sources instead. You will need to pass multiple props, but both emitting and handling the events is easier to understand this way. As an example, you could create two separate event sources and just invoke `this.fooEvent.emit()` or  `this.barEvent.emit()` respectively.
+We however recommend to create multiple specific event sources instead. You will need to pass multiple props, but both emitting and handling the events is easier to understand this way. As an example, you could create two separate event sources and just invoke `this.fooEvent.emit()` or `this.barEvent.emit()` respectively.
