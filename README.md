@@ -1,4 +1,4 @@
-# vue-parent-emit <a href="https://www.npmjs.com/package/vue-parent-emit"><img src="https://badgen.net/npm/v/vue-parent-emit/next"></a> <img src="https://badgen.net/npm/types/vue-parent-emit">
+# vue-parent-emit <a href="https://www.npmjs.com/package/vue-parent-emit"><img src="https://badgen.net/npm/v/vue-parent-emit"></a> <img src="https://badgen.net/npm/types/vue-parent-emit">
 
 Trigger events from a parent Vue 3 component to one or more child components.
 
@@ -11,7 +11,7 @@ This small library provides an intentionally limited event bus. It allows parent
 ## Installation
 
 ```bash
-npm install vue-parent-emit@next
+npm install vue-parent-emit
 ```
 
 ## Usage
@@ -20,7 +20,9 @@ npm install vue-parent-emit@next
     - Create an event source using `myEventSource = newEventSource()`
     - Pass as prop to child (e.g. `:my-event="myEventSource"`)
 - Child Component
-    - in `setup()`: `useExternalEvent(props.myEvent, fetchSomeData)` This registers an event listener
+    - in `setup()`: `useExternalEvent(props.myEvent, fetchSomeData)` This registers an event listener when mounted.
+    - or e.g. in `nounted()`: `useExternalEvent(props.myEvent, fetchSomeData, {immediate: true})` This registers an event listener immediately.
+    - The event listener will be deregistered automatically on unmount.
 - Somewhere in parent
     - emit events using e.g. `myEventSource.emit('hello child!')`
     - call `emit()` without a parameter, or use a single parameter to pass arbitrary data to the event listener(s)
@@ -97,8 +99,6 @@ function fetchSomeData(myData, eventPayload /*TS: :MyEventData*/) {
 
 ### Child Component (traditional Options API)
 
-NOTE: you will have to manually unregister the event listener in `beforeUnmount()`
-
 ```js
 // child-component.vue
 <template>
@@ -115,11 +115,7 @@ export default defineComponent({
   },
   mounted() {
     // register child event listener
-    this.myEvent.addListener(this.fetchSomeData);
-  },
-  beforeUnmount() {
-    // IMPORTANT: un-register child event listener
-    this.myEvent.removeListener(this.fetchSomeData);
+    useExternalEvent(this.myEvent, this.fetchSomeData, {immediate: true});
   },
   methods: {
     fetchSomeData(eventPayload /*TS: :MyEventData*/) {
