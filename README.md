@@ -21,7 +21,7 @@ npm install vue-parent-emit
     - Pass as prop to child (e.g. `:my-event="myEventSource"`)
 - Child Component
     - in `setup()`: `useExternalEvent(props.myEvent, fetchSomeData)` This registers an event listener when mounted.
-    - or e.g. in `nounted()`: `useExternalEvent(props.myEvent, fetchSomeData, {immediate: true})` This registers an event listener immediately.
+    - or e.g. in `mounted()`: `useExternalEvent(props.myEvent, fetchSomeData, {immediate: true})` This registers an event listener immediately.
     - The event listener will be deregistered automatically on unmount.
 - Somewhere in parent
     - emit events using e.g. `myEventSource.emit('hello child!')`
